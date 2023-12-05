@@ -29,6 +29,8 @@ public class IRoadTrip {
     public static void main(String[] args) {
         IRoadTrip a3 = new IRoadTrip(args);
 
+        System.out.println("Main method works!");//DEL
+        
         a3.acceptUserInput();
     }
 

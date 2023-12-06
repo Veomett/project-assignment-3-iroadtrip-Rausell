@@ -3,20 +3,24 @@ import java.util.List;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+//Importing hashmap module
+import java.util.HashMap;
 
 public class IRoadTrip {
-
 
     public IRoadTrip (String [] args) {
         // Replace with your code//DEL
         try{
-            File file = new File(args[0]);
+            //Creating hashmap
+            //Dealing with file state_name.tsv
+            File file = new File(args[2]);
             Scanner line = new Scanner(file);
-            
-            //Reading in content of the files
+            //HashMap<String, String> 
+            //Adding to hashmap
             while(line.hasNextLine()){
-                String words = line.nextLine();
-                System.out.println(words);
+                String countryCode = line.nextLine();
+                //Testing the breaking of 
+                System.out.println(countryCode);
             }
 
             line.close();
@@ -46,14 +50,15 @@ public class IRoadTrip {
 
 
     public static void main(String[] args) {
-        IRoadTrip a3 = new IRoadTrip(args);//DEL
+        //Passes args files to IRoadTrip
+        IRoadTrip documents = new IRoadTrip(args);
 
         System.out.println("Main method works!");//DEL
 
         System.out.println("Enter the name of the first country (type EXIT to quit): ");
         System.out.println("Enter the name of the second country (type EXIT to quit): ");
         
-        //a3.acceptUserInput();
+        //documents.acceptUserInput();
     }//End of main
 }//End of IRoadTrip
 

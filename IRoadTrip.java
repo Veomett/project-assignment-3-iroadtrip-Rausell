@@ -20,7 +20,7 @@ public class IRoadTrip {
             Scanner line = new Scanner(file);
             
             //Creating hashmap to store the country code and country name
-            HashMap<String, String> stateNames = new HashMap<String, String>();
+            HashMap<String, String> countries = new HashMap<String, String>();
             
             //Adding to hashmap
             while(line.hasNextLine()){
@@ -37,11 +37,9 @@ public class IRoadTrip {
                     String[] countryNames = Arrays.copyOfRange(parts, 2, parts.length - 2);
                     String countryName = String.join(" ", countryNames);
                     //System.out.println(countryName);//DEL
+                    //Adding countries that are still 'alive' into hashmap
+                    countries.put(countryCode, countryName);
                 }
-
-                //Testing the breaking of//DEL 
-                //System.out.println(countryInfo);//DEL
-                //System.out.println("Got to the end of IRoadTrip class!!");//DEL
             }
 
             line.close();

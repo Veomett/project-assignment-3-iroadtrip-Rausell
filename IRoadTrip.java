@@ -58,6 +58,13 @@ public class IRoadTrip {
             File fileII = new File(args[1]);
             Scanner lineII = new Scanner(fileII);
 
+            /*This small if statement should skip the first line in capdist.csv 
+            in order to ensure that we can extract the distance (integer) without issues
+            as the first line is filled with only chars.*/
+            if(lineII.hasNextLine()) {
+                lineII.nextLine();
+            }
+
             while(lineII.hasNextLine()){
                 String capitalStats = lineII.nextLine();
                 String[] distances = capitalStats.toLowerCase().split(",");

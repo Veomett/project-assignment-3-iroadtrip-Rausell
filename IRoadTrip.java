@@ -52,6 +52,28 @@ public class IRoadTrip {
                     System.out.println();//DEL
                 }
             }
+
+
+            //Reading information from capdist.csv
+            File fileII = new File(args[1]);
+            Scanner lineII = new Scanner(fileII);
+
+            while(lineII.hasNextLine()){
+                String capitalStats = lineII.nextLine();
+                String[] distances = capitalStats.toLowerCase().split(",");
+                //Getting input validation for both country A & B
+                String countryA = exists(distances[1]); 
+                String countryB = exists(distances[3]);
+                //Taking note of the distance difference in km between capitals
+                int distanceKm = Integer.parseInt(distances[4]);
+                //Updating distance in adj for land connected countries
+                if(adj.containsKey(countryA) && adj.get(countryA).containsKey(countryB)){
+                    //getting both stats for country A and B as they are stored in an undirected graph
+                    adj.get(countryA).put(countryB, distanceKm);
+                    adj.get(countryB).put(countryA, distanceKm);
+                }
+            }
+
             //TESTING ABOVE
 
 
@@ -80,12 +102,22 @@ public class IRoadTrip {
             }
 
             lineIII.close();
+            lineII.close();
             lineI.close();//Newly Added
 
         } catch (FileNotFoundException e){
             System.err.println("Error " + e.getMessage());
         }
     }//End of IRoadTrip
+
+    //Called upon to check the existence of the given country
+    private String exists(String country){
+        if(countries.containsKey(country)){
+            //If contry exists, return its proper name
+            return countries.get(country);
+        }
+        return null;
+    }//End of method exists
 
 
     public int getDistance (String country1, String country2) {

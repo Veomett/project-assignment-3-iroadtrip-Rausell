@@ -5,7 +5,8 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 //Importing hashmap module
 import java.util.HashMap;
-//Import array module
+//Import arrays module
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class IRoadTrip {
@@ -26,7 +27,7 @@ public class IRoadTrip {
                 String countryInfo = line.nextLine();
 
                 //Breaking down the line to determine if country is recent (2020)
-                String[] parts = countryInfo.split("\\s+");
+                String[] parts = countryInfo.toLowerCase().split("\\s+");
                 //Getting the last 'word' in line which is the year it 'ended'
                 String lastWord = parts[parts.length - 1];
                 String countryCode = parts[0];
@@ -62,39 +63,38 @@ public class IRoadTrip {
 
 
     public void acceptUserInput() {
-        //Getting user input
-        
-        System.out.println("User input getting started.");
-
         //Setting up input & country variables
         Scanner input = new Scanner(System.in);
-        String country1, country2;
+        System.out.println("Hello, what is your name? ");
+        String country1 = input.nextLine().toLowerCase();
+        String country2 = country1;
         
+        //while(!(input.nextLine().equalsIgnoreCase("EXIT"))){
         while(true){
-            System.out.println("Enter the name of the first country (type EXIT to quit): ");
-            country1 = input.nextLine();
-
-            if(country1.equals("EXIT")){
-                break;
-            } 
-
-            System.out.println("Enter the name of the second country (type EXIT to quit): ");
-            country2 = input.nextLine();
-            if(country2.equals("EXIT")){
+            System.out.println("\nEnter the name of the first country (type EXIT to quit): ");
+            country1 = input.nextLine().toLowerCase();
+            if(country1.equalsIgnoreCase("EXIT")){
                 break;
             }
+            //Checking to see if given country name exists in our hashMap
+            boolean countryReal = countries.containsValue(country1);
+            if(!countryReal){
+                System.out.println("Invalid country name. Please enter a valid country name.");
+                continue;
+            }
 
-            if(!(countries.containsValue(country1)) || (countries.containsValue(country2))){
-                System.out.println("-1");
+            System.out.println("\nEnter the name of the second country (type EXIT to quit): ");
+            country2 = input.nextLine().toLowerCase();
+            if(country2.equalsIgnoreCase("EXIT")){
                 break;
-            } 
-        }
-        
-        //String userInput = input.nextLine();
-        //System.out.println("Enter the name of the second country (type EXIT to quit): ");
-        //String userInput = input.nextLine();
-        //System.out.println("You said: " + userInput);
-        //input.close();
+            }
+            //Checking to see if given country name exists in our hashMap
+            countryReal = countries.containsValue(country2);
+            if(!countryReal){
+                System.out.println("Invalid country name. Please enter a valid country name.");
+                continue;
+            }
+        }//End of while loop
     }//End of acceptUserInput
 
 

@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 //Importing hashmap module
 import java.util.HashMap;
+//Import array module
+import java.util.Arrays;
 
 public class IRoadTrip {
 
@@ -22,11 +24,24 @@ public class IRoadTrip {
             
             //Adding to hashmap
             while(line.hasNextLine()){
+                String countryInfo = line.nextLine();
 
-                
-                String countryCode = line.nextLine();
-                //Testing the breaking of 
-                System.out.println(countryCode);
+                //Breaking down the line to determine if country is recent (2020)
+                String[] parts = countryInfo.split("\\s+");
+                //Getting the last 'word' in line which is the year it 'ended'
+                String lastWord = parts[parts.length - 1];
+                String countryCode = parts[0];
+
+                //Loop that reads in the 2020 year portion to determine accuracy
+                if(lastWord.equals("2020-12-31")){ 
+                    String[] countryNames = Arrays.copyOfRange(parts, 2, parts.length - 2);
+                    String countryName = String.join(" ", countryNames);
+                    //System.out.println(countryName);//DEL
+                }
+
+                //Testing the breaking of//DEL 
+                //System.out.println(countryInfo);//DEL
+                //System.out.println("Got to the end of IRoadTrip class!!");//DEL
             }
 
             line.close();

@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.Arrays;
 
 public class IRoadTrip {
+    //Creating hashmap to store the country code and country name
+    private static HashMap<String, String> countries = new HashMap<String, String>();
 
     public IRoadTrip (String [] args) {
         // Replace with your code//DEL
@@ -18,9 +20,6 @@ public class IRoadTrip {
             //Opening & reading file
             File file = new File(args[2]);
             Scanner line = new Scanner(file);
-            
-            //Creating hashmap to store the country code and country name
-            HashMap<String, String> countries = new HashMap<String, String>();
             
             //Adding to hashmap
             while(line.hasNextLine()){
@@ -63,8 +62,39 @@ public class IRoadTrip {
 
 
     public void acceptUserInput() {
-        // Replace with your code
-        System.out.println("IRoadTrip - skeleton");
+        //Getting user input
+        
+        System.out.println("User input getting started.");
+
+        //Setting up input & country variables
+        Scanner input = new Scanner(System.in);
+        String country1, country2;
+        
+        while(true){
+            System.out.println("Enter the name of the first country (type EXIT to quit): ");
+            country1 = input.nextLine();
+
+            if(country1.equals("EXIT")){
+                break;
+            } 
+
+            System.out.println("Enter the name of the second country (type EXIT to quit): ");
+            country2 = input.nextLine();
+            if(country2.equals("EXIT")){
+                break;
+            }
+
+            if(!(countries.containsValue(country1)) || (countries.containsValue(country2))){
+                System.out.println("-1");
+                break;
+            } 
+        }
+        
+        //String userInput = input.nextLine();
+        //System.out.println("Enter the name of the second country (type EXIT to quit): ");
+        //String userInput = input.nextLine();
+        //System.out.println("You said: " + userInput);
+        //input.close();
     }//End of acceptUserInput
 
 
@@ -72,12 +102,7 @@ public class IRoadTrip {
         //Passes args files to IRoadTrip
         IRoadTrip documents = new IRoadTrip(args);
 
-        System.out.println("Main method works!");//DEL
-
-        System.out.println("Enter the name of the first country (type EXIT to quit): ");
-        System.out.println("Enter the name of the second country (type EXIT to quit): ");
-        
-        //documents.acceptUserInput();
+        documents.acceptUserInput();
     }//End of main
 }//End of IRoadTrip
 

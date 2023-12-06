@@ -11,13 +11,19 @@ public class IRoadTrip {
     public IRoadTrip (String [] args) {
         // Replace with your code//DEL
         try{
-            //Creating hashmap
+
             //Dealing with file state_name.tsv
+            //Opening & reading file
             File file = new File(args[2]);
             Scanner line = new Scanner(file);
-            //HashMap<String, String> 
+            
+            //Creating hashmap to store the country code and country name
+            HashMap<String, String> stateNames = new HashMap<String, String>();
+            
             //Adding to hashmap
             while(line.hasNextLine()){
+
+                
                 String countryCode = line.nextLine();
                 //Testing the breaking of 
                 System.out.println(countryCode);

@@ -17,6 +17,7 @@ public class IRoadTrip {
 
     //Graph creation
     private Map<String, Map<String, Integer>> adj;//Newly added
+    private Map<String, String> worldMap;
 
     public IRoadTrip (String [] args) {
         if(args.length != 3){
@@ -24,8 +25,9 @@ public class IRoadTrip {
             System.exit(1);
         }
 
-        //Initializing adj map
+        //Initializing adj & worldMap map
         adj = new HashMap<>();
+        worldMap = new HashMap<>();
 
         try{
             //TESTING BELOW
@@ -49,7 +51,7 @@ public class IRoadTrip {
                         //Setting distance at 0, aka starting on the user given country
                         adj.get(country).put(neighborID, 0);
                     }
-                    System.out.println();//DEL
+                    //System.out.println();//DEL
                 }
             }
 
@@ -87,16 +89,22 @@ public class IRoadTrip {
             //Reading information from file state_name.tsv
             File fileIII = new File(args[2]);
             Scanner lineIII = new Scanner(fileIII);
-            
+
+            //NEWLY Added below
+            if(lineIII.hasNextLine()) {
+                lineIII.nextLine();
+            }
+            //Newly Added above
+
             //Adding to hashmap
             while(lineIII.hasNextLine()){
                 String countryInfo = lineIII.nextLine();
-
                 //Breaking down the line to determine if country is recent (2020)
                 String[] parts = countryInfo.toLowerCase().split("\\s+");
                 //Getting the last 'word' in line which is the year it 'ended'
                 String lastWord = parts[parts.length - 1];
-                String countryCode = parts[0];
+                String countryCode = parts[1];
+                String officialName = parts[2];
 
                 //Loop that reads in the 2020 year portion to determine accuracy
                 if(lastWord.equals("2020-12-31")){ 
@@ -105,6 +113,7 @@ public class IRoadTrip {
                     //System.out.println(countryName);//DEL
                     //Adding countries that are still 'alive' into hashmap
                     countries.put(countryCode, countryName);
+                    worldMap.put(countryCode, officialName);
                 }
             }
 
@@ -142,7 +151,7 @@ public class IRoadTrip {
     public void acceptUserInput() {
         //Setting up input & country variables
         Scanner input = new Scanner(System.in);
-        System.out.println("Hello, what is your name? ");
+        System.out.println("\nHello, what is your name? ");
         String country1 = input.nextLine().toLowerCase();
         String country2 = country1;
         
@@ -171,15 +180,19 @@ public class IRoadTrip {
                 System.out.println("Invalid country name. Please enter a valid country name.");
                 continue;
             }
+
+            
+
         }//End of while loop
+        input.close();
     }//End of acceptUserInput
 
 
     public static void main(String[] args) {
         //Passes args files to IRoadTrip
         IRoadTrip documents = new IRoadTrip(args);
-
         documents.acceptUserInput();
+
     }//End of main
 }//End of IRoadTrip
 

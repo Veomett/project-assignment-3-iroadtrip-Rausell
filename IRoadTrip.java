@@ -50,11 +50,11 @@ public class IRoadTrip {
                     String[] myNeighbors = goodneighbors[1].split(";");
                     for(String neighbor : myNeighbors){
                         System.out.println(neighbor);//DEL
-                        String[] neighborNames = neighbor.split(" , ");
-                        String neighborID = neighborNames[1];
-                        int capDistance = Integer.parseInt(neighborNames[4]);
+                        String[] neighborNames = neighbor.split(" ");
+                        String neighborID = neighborNames[0];
+                        //int capDistance = Integer.parseInt(neighborNames[4]);
                         //Setting distance at 0, aka starting on the user given country
-                        adj.get(country).put(neighborID, capDistance);
+                        adj.get(country).put(neighborID, 0);
                     }
                     //System.out.println();//DEL
                 }
@@ -150,19 +150,53 @@ public class IRoadTrip {
     //Following functions pertain to the process of findPath which takes a BFS approach
 
     //Working BELOW
+    private String retrieveCountry(int vvalue){
+        for(Map.Entry<String, Integer> entry : adj.entrySet()){
+            if(entry.getValue() == vvalue){
+                return entry.getKey();
+            }
+        }
+        return "";
+    }
+
     public List<String> findPath (String country1, String country2) {
         List<String> path = new ArrayList<>();
         
-        //int startCountry = worldMap.get(country1);
-        //int endCountry = worldMap.get(country2);
+        int startCountry = adj.get(country1).get(country2);
+        int endCountry = adj.get(country2).get(country1);
 
-        boolean[] visited = new boolean[worldMap.size()];
-        int[] parent = new int[worldMap.size()];
+        boolean[] visited = new boolean[adj.size()];
+        String[] parent = new int[adj.size()];
 
         //BFS in action
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(startCountry);
+        visited[startCountry] = true;
+        parent[startCountry] = null;
 
+        while(!queue.isEmpty()){
+            int currentCountry = queue.poll();
 
-        return null;
+            if(currentCountry == endCountry){
+                //Building path to print
+                int v = endCountry;
+                while(v != -1){
+                    path.add(retrieveCountry(c) + " --> ");
+                    v = parent[v];
+                }
+                Collections.reverse(path);
+                return path;
+            }
+            for(int neightbor : worldMap.get(retrieveCountry(currentCountry)).keySet()){
+                if(!visited[neighbor]){
+                    visited[neighbor] = true;
+                    queue.add(neighbor);
+                    parent[neighbor] = currentCountry;
+                }
+            }
+        }
+        System.out.println("No path found");
+        return path;
         //Working ABOVE
     }//End of findPath
 

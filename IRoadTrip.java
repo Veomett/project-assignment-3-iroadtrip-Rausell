@@ -181,7 +181,16 @@ public class IRoadTrip {
                 continue;
             }
 
-            
+            //Printing findPath() information below//Below under construction
+            List<String> path = findPath(country1, country2);
+            if(!(path.isEmpty())){
+                System.out.println("Route from " + country1 + " to " + country2);
+                for(String milestone : path){
+                    System.out.println(" * " + milestone);
+                }
+            } else {
+                System.out.println("No route possible for countries " + country1 + " and " + country2);
+            }
 
         }//End of while loop
         input.close();

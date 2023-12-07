@@ -1,2 +1,87 @@
 Project03 README
 Angel Lopez
+
+For project03, I aimed to replicate the objective of printing the trajectory of one country to another (with multiple countries if they are in the way) printed as well along side their distance.
+
+This program would also ensure that countries were realistically traversal thorugh land (as our user might be planning a bike trip), as well as dealing with different inputs of the country name (eg: US and United States) while also retaining levels of logical implementation (such as having no distance between mexico and Mexico), dealing with different name conventions such as England or U.K.
+
+My approach to the project initially started with a hashmap that will keep track of the following information for each given data set in different file formats:
+
+borders.txt
+Kept in a hashmap of format (String, ArrayList) the name of the main country followed by the name/distance of each neighbor based on land borders (aka having no countries in between). This hashmap ensures to immediately negate any country inputs that aren't neightbors to any lands (such as islands or countries like Australia). 
+
+Additionally the distance in km allows the program to treat the distances as weights from countryA to countryB which will later allow the program to calculate the shortest path available for countries that are accessible via land.
+
+capdist.csv
+In this file we are extracting both, countries code name and kmdist (distance in kilometers) to find the distance between each of the countries capital. This allows for easier extraction of distance for land connected countries.
+
+state_name.tsv
+This document is also stored in a hashmap. We extract the country official full name and code name. Using only the countries who dates contain 2020 as that is the most recent information provided by the document. With this hashmap we ensure that any inputs like U.S. or united states are all converted to the code name for simple use in the united states case that would be USA (with its official name being used for printing purposes which would be United States of America).
+
+Starting with the program, method IRoadTrip() initializes the hashmaps, ensures that the starting terminal input matches the program name with three required files, and reads in the files -- with error handling added for any issues in reading in the files. As the program reads each file it has specific instructions for each individual file in breaking them apart and extracting the information to add into their appropriate hashmap.
+
+We then close each scanner used to read each file.
+
+To achieve the extraction and adding it to their appropriate hashmaps, ArrayLists were used to help tackle the inforamtion as I dealt with contents one line at a time (which is how the files were ordered). I also implemented some functions such as split() to break lines into accessible cells, toLowerCase() to avoid case sensitive errors for the debugging process, and .put() to add information to the hashmaps.
+
+From here we focused on the acceptUserProgram() program as we took time to create a while loop that takes in user inputs and only moves forward with the rest of the program as long as:
+a. The user enters an exisiting, valid country (not something like my house or california)
+b. The user enters names for two countries.
+
+Within each input for country1 and country2 we call check the validity of given country name by calling the hashmap countries which contains the official names. At the same time we also created a method called exists() that checks validity of a given string by checking on hashmap countries. This allows us to reduce lines by repeatedly using a loop to check a name if we get instances of U.S.,  USA, united states, or even The United States of America.
+
+Afterwards we also close the scanner that takes in user input.
+
+With method getDistance() I planned to implement the Dijkstra's algorithm to get the shortest distance between two countries if they are accessible via land. The issue with the implementation is that I kept getting error messages as follows:
+
+warning: [unchecked] unchecked conversion
+		adj = new LinkedList[v];
+
+Note: Graph.java uses unchecked or unsafe operations.
+
+I later found out that my implementation of a LinkedList in the constructor to be created for each iteration of a distance being found was not compatible with the current JAVA system. After researching more about the issue I decided to implement ArrayLists to replace the LinkedList since the only way the LinkedList could potential run was by adding the following syntax:
+
+@SuppressWarnings("unchecked")
+Which I had little knowledge about.
+
+By implementing arrayLists we ensured the three tracking points in the Dijkstra's algorithm: visited state, weight, and remainder are still able to operate.
+
+Having found the shortest distance, for method findPath() we will now use a BFS search to retrieve the name of the countries that might be crossed when traveling from country1 to country2. For this method we would use the hashmap adj (explained in program via comments) to retrieve the name of each potential country. 
+
+The process of retrieving the country is also in its own individual method called retrieveCountry() to call within our while loop and decrease the risk of logical bugs in a nested while loop (which was an issue I faced when dealing with getDistance initially).
+
+After findPath traverses all potential countries it will pass (adding that information into an arrayList), it then passes the arraylist to main in order for the final product to be printed.
+
+Overall by implementing hashmaps and arraylists I ensured that the information was smoothly accessible throughout the program and used for validation of the multiple ways countries can and can't be named. 
+
+Additionally implementing the BFS search and Dijkstra's algorithm I ensured that we got the shortest distance possible and that each country was able to be named/printed to the user. 
+
+Some test cases I used was adding countries in different forms as follows:
+
+US
+U.S.
+United States
+united states
+UniTED stATes
+
+as well as random inputs as follows:
+myHouse
+USF
+sdf a
+
+mexic
+australiiaa
+
+Additionally throughout the program I printed the hashmap content and arrayList's contents during the building process to ensure that the correct information was being collected and shown.
+
+The program was difficult to execute as the errors mentioned above was not something I've encountered before or was focused upon in class. 
+
+However the following resources helped:
+(https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-in-java-using-priorityqueue/) Dijkstra's method
+
+(https://www.baeldung.com/java-dijkstra) Dijkstra's method
+
+(https://www.geeksforgeeks.org/breadth-first-search-or-bfs-for-a-graph/) BFS overview
+
+Class notes & recording
+

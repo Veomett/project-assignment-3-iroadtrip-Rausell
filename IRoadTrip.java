@@ -10,11 +10,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 //Importing map module for graph creation
 import java.util.Map;
+//Importing module for graph traversal aka BFS portion
+import java.util.*;
 
 public class IRoadTrip {
     //Creating hashmap to store the country code and country name & check existence
-    private static HashMap<String, String> countries = new HashMap<String, String>();
-
+    private HashMap<String, String> countries;
     //Graph creation
     private Map<String, Map<String, Integer>> adj;//Newly added
     private Map<String, String> worldMap;
@@ -28,6 +29,7 @@ public class IRoadTrip {
         //Initializing adj & worldMap map
         adj = new HashMap<>();
         worldMap = new HashMap<>();
+        countries = new HashMap<>();//<String, String>();//DEL
 
         try{
             //TESTING BELOW
@@ -45,7 +47,7 @@ public class IRoadTrip {
                 if(goodneighbors.length > 1){
                     String[] myNeighbors = goodneighbors[1].split(";");
                     for(String neighbor : myNeighbors){
-                        System.out.println(neighbor);//DEL
+                        //System.out.println(neighbor);//DEL
                         String[] neighborNames = neighbor.split(" ");
                         String neighborID = neighborNames[0];
                         //Setting distance at 0, aka starting on the user given country
@@ -142,8 +144,13 @@ public class IRoadTrip {
     }//End of getDistance
 
 
+    //Following functions pertain to the process of findPath which takes a BFS approach
+
     public List<String> findPath (String country1, String country2) {
-        // Replace with your code
+        List<String> path = new ArrayList<>();
+        
+
+
         return null;
     }//End of findPath
 

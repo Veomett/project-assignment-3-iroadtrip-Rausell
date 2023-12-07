@@ -41,17 +41,20 @@ public class IRoadTrip {
                 String borderInfo = lineI.nextLine();
                 String[] goodneighbors = borderInfo.toLowerCase().split(" = ");
                 String country = goodneighbors[0];
+                
                 if(!(adj.containsKey(country))){
                     adj.put(country, new HashMap<>());
                 }
+
                 if(goodneighbors.length > 1){
                     String[] myNeighbors = goodneighbors[1].split(";");
                     for(String neighbor : myNeighbors){
-                        //System.out.println(neighbor);//DEL
-                        String[] neighborNames = neighbor.split(" ");
-                        String neighborID = neighborNames[0];
+                        System.out.println(neighbor);//DEL
+                        String[] neighborNames = neighbor.split(" , ");
+                        String neighborID = neighborNames[1];
+                        int capDistance = Integer.parseInt(neighborNames[4]);
                         //Setting distance at 0, aka starting on the user given country
-                        adj.get(country).put(neighborID, 0);
+                        adj.get(country).put(neighborID, capDistance);
                     }
                     //System.out.println();//DEL
                 }
@@ -146,12 +149,21 @@ public class IRoadTrip {
 
     //Following functions pertain to the process of findPath which takes a BFS approach
 
+    //Working BELOW
     public List<String> findPath (String country1, String country2) {
         List<String> path = new ArrayList<>();
         
+        //int startCountry = worldMap.get(country1);
+        //int endCountry = worldMap.get(country2);
+
+        boolean[] visited = new boolean[worldMap.size()];
+        int[] parent = new int[worldMap.size()];
+
+        //BFS in action
 
 
         return null;
+        //Working ABOVE
     }//End of findPath
 
 
